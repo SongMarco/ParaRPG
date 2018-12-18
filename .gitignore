@@ -78,4 +78,5 @@ package/*
 
 #Content files (too heavy for now)
 content/*
-
+!content/ThirdPersonBP
+!content/ThirdPerson
