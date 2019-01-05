@@ -24,6 +24,10 @@ private:
 
 		void RequestLogin();
 
+		void RequestLoginTest();
+
+		void OnRequestResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
 	/*Assign this function to call when the GET request processes sucessfully*/
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
