@@ -14,13 +14,12 @@ AHttpService::AHttpService(const class FObjectInitializer& ObjectInitializer)
 // Called when the game starts or when spawned
 void AHttpService::BeginPlay()
 {
-	MyHttpCall();
-	GEngine->AddOnScreenDebugMessage(1, 1000.0f, FColor::Green, "BBa BBAM");
-	GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, "BBa BBAM");
+	//MyHttpCall();
+	RequestLogin();
+	//GEngine->AddOnScreenDebugMessage(1, 1000.0f, FColor::Green, "BBa BBAM");
+	//GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, "BBa BBAM");
 	Super::BeginPlay();
-
-
-
+	   
 }
 
 /*Http call*/
@@ -34,6 +33,45 @@ void AHttpService::MyHttpCall()
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
 	Request->SetHeader("Content-Type", TEXT("application/json"));
 	Request->ProcessRequest();
+}
+
+/*Http call*/
+void AHttpService::RequestLogin()
+{
+	TSharedRef<IHttpRequest> Request = Http->CreateRequest();
+	Request->OnProcessRequestComplete().BindUObject(this, &AHttpService::OnResponseReceived);
+	//This is the url on which to process the request
+	Request->SetURL("http://115.68.231.13/project/ue4/testHttp.php");
+	Request->SetVerb("POST");
+	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
+	Request->SetHeader("Content-Type", TEXT("application/json"));
+
+
+	FString json_data_to_send = "";
+
+	FString string_value = "Hello World";
+	FString password = "password123123";
+
+	int int_value = 10;
+	bool boolean_value = true;
+
+	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
+	JsonObject->SetStringField("key1", password);
+	JsonObject->SetNumberField("key2", int_value);
+	JsonObject->SetBoolField("key3", boolean_value);
+
+	TSharedRef<TJsonWriter<>> json_writer = TJsonWriterFactory<>::Create(&json_data_to_send);
+	FJsonSerializer::Serialize(JsonObject.ToSharedRef(), json_writer);
+
+	// Can print the data to check if it is correct
+
+	//Output it to the engine
+	GEngine->AddOnScreenDebugMessage(1, 10.0f, FColor::Green, json_data_to_send);
+
+	Request->ProcessRequest();
+
+
+
 }
 
 /*Assigned function on successfull http call*/
@@ -52,8 +90,13 @@ void AHttpService::OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr 
 		//Get the value of the json object by field name
 		int32 recievedInt = JsonObject->GetIntegerField("customInt");
 
+		FString receivedString = JsonObject->GetStringField("stringLoginInfo");
+
 		//Output it to the engine
-		GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, FString::FromInt(recievedInt));
+		GEngine->AddOnScreenDebugMessage(1, 10.0f, FColor::Green, FString::FromInt(recievedInt));
+
+		////Output it to the engine
+		//GEngine->AddOnScreenDebugMessage(1, 10.0f, FColor::Green, receivedString);
 	}
 }
 

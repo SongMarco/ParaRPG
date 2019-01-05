@@ -22,6 +22,8 @@ private:
 	UFUNCTION()
 		void MyHttpCall();
 
+		void RequestLogin();
+
 	/*Assign this function to call when the GET request processes sucessfully*/
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
