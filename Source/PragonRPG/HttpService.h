@@ -20,13 +20,11 @@ private:
 
 	/* The actual HTTP call */
 	UFUNCTION()
-		void MyHttpCall();
 
-		void RequestLogin();
+	void MyHttpCall();
 
-		void RequestLoginTest();
+	void RequestLogin();
 
-		void OnRequestResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
 	/*Assign this function to call when the GET request processes sucessfully*/
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
