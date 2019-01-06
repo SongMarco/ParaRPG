@@ -18,7 +18,8 @@ void ULoginFunctionLibrary::FunctionLogin(FString nickName, FString password)
 	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
 
 	//This is the url on which to process the request
-	Request->SetURL("http://115.68.231.13/project/ue4/testHttp.php");
+	//Request->SetURL("http://115.68.231.13/project/ue4/testHttp.php");
+	Request->SetURL("http://115.68.231.13/project/ue4/login.php");
 	Request->SetVerb("POST");
 	Request->SetHeader(TEXT("User-Agent"), "X-UnrealEngine-Agent");
 	Request->SetHeader("Content-Type", TEXT("application/json"));
@@ -27,8 +28,9 @@ void ULoginFunctionLibrary::FunctionLogin(FString nickName, FString password)
 	FString json_data_to_send = "";
 
 	TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
-	JsonObject->SetStringField("password", password);
+	
 	JsonObject->SetStringField("nickName", nickName);
+	JsonObject->SetStringField("password", password);
 
 	TSharedRef<TJsonWriter<>> json_writer = TJsonWriterFactory<>::Create(&json_data_to_send);
 	FJsonSerializer::Serialize(JsonObject.ToSharedRef(), json_writer);
@@ -66,16 +68,20 @@ void ULoginFunctionLibrary::OnResponseReceived(FHttpRequestPtr Request, FHttpRes
 		//Get the value of the json object by field name
 		FString nickName = JsonObject->GetStringField("nickName");
 		FString password = JsonObject->GetStringField("password");
-		
-		
+		bool loginResult = JsonObject->GetBoolField("loginResult");
+
+
 		//FString receivedString = JsonObject->GetStringField("stringLoginInfo");
 
 		//Output it to the engine
 		//GEngine->AddOnScreenDebugMessage(1, 10.0f, FColor::Green, FString::FromInt(recievedInt));
-		UE_LOG(LogHttp, Warning, TEXT("nickName is ddaas %s"), *nickName);
+		UE_LOG(LogHttp, Warning, TEXT("nickName is %s"), *nickName);
 
 		UE_LOG(LogHttp, Warning, TEXT("password is %s"), *password);
-		
+		UE_LOG(LogHttp, Warning, TEXT("loginResult is %s"), (loginResult ? TEXT("TRUE") : TEXT("FALSE"))  );
+
+
+
 		GEngine->AddOnScreenDebugMessage(2, 10.0f, FColor::Yellow, nickName+password);
 
 		//Output it to the engine
