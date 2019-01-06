@@ -9,6 +9,7 @@
 #include "JsonUtilities.h"
 #include "LoginFunctionLibrary.generated.h"
 
+
 /**
  * 
  */
@@ -26,7 +27,10 @@ class PRAGONRPG_API ULoginFunctionLibrary : public UBlueprintFunctionLibrary
 	/*Assign this function to call when the GET request processes sucessfully*/
 	void OnResponseReceived(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
-
+public:
+	/** What is the Player's current musical skill level? */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "LoginFunction")
+	bool loginResult = false;
 	
 };
 

@@ -63,8 +63,6 @@ void ULoginFunctionLibrary::OnResponseReceived(FHttpRequestPtr Request, FHttpRes
 	if (FJsonSerializer::Deserialize(Reader, JsonObject))
 	{
 
-
-
 		//Get the value of the json object by field name
 		FString nickName = JsonObject->GetStringField("nickName");
 		FString password = JsonObject->GetStringField("password");
