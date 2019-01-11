@@ -1,0 +1,28 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.3",
+	"FriendlyName": "Socketer",
+	"Description": "An FSocket wrapper library for Blueprints. WARNING: This is an almost direct mapping, and the sockets are unmanaged, so use caution.",
+	"Category": "Networking",
+	"CreatedBy": "HowToCompute",
+	"CreatedByURL": "https://h2cstudios.com",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "https://forums.unrealengine.com/community/community-content-tools-and-tutorials/112836-socketer-free-tcp-socket-blueprint-plugin",
+	"EngineVersion": "4.21.0",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "Socketer",
+			"Type": "Runtime",
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms": [
+				"Win64",
+				"Win32"
+			]
+		}
+	]
+}
