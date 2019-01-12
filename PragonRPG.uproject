@@ -21,6 +21,10 @@
 		{
 			"Name": "AESHandlerComponent",
 			"Enabled": true
+		},
+		{
+			"Name": "Socketer",
+			"Enabled": true
 		}
 	]
 }
