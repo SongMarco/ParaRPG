@@ -6,8 +6,7 @@
 FString UHashStringLibrary::HashString(FString inputString)
 {
 	FString outputString;
-
-	
+		
 	//std:string to FString
 	std::string MyStdString(TCHAR_TO_UTF8(*inputString));
 	   
