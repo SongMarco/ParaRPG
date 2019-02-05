@@ -17,6 +17,12 @@ class PRAGONRPG_API UHashStringLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 
-		UFUNCTION(Blueprintcallable )			   
+	UFUNCTION(Blueprintcallable, Category = "SHA512")
 		static FString HashString(FString inputString);
+	
+	UFUNCTION(BlueprintCallable, Category = "AES256")
+		static FString Encrypt(FString InputString, FString Key);
+
+	UFUNCTION(BlueprintCallable, Category = "AES256")
+		static FString Decrypt(FString InputString, FString Key);
 };
