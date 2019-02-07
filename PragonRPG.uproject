@@ -13,22 +13,26 @@
 			]
 		}
 	],
-  "Plugins": [
-    {
-      "Name": "GoogleVRHMD",
-      "Enabled": true
-    },
-    {
-      "Name": "AESHandlerComponent",
-      "Enabled": true
-    },
-    {
-      "Name": "Socketer",
-      "Enabled": true
-    },
-    {
-      "Name": "GameLiftServerSDK",
-      "Enabled": true
-    }
-  ]
+	"Plugins": [
+		{
+			"Name": "GoogleVRHMD",
+			"Enabled": true
+		},
+		{
+			"Name": "AESHandlerComponent",
+			"Enabled": true
+		},
+		{
+			"Name": "Socketer",
+			"Enabled": true
+		},
+		{
+			"Name": "GameLiftServerSDK",
+			"Enabled": true
+		},
+		{
+			"Name": "GameLiftClientSDK",
+			"Enabled": true
+		}
+	]
 }
