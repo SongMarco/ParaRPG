@@ -3,11 +3,11 @@
 #include "LiftGameMode.h"
 
 ALiftGameMode::ALiftGameMode()
-	//: Super()
+	: Super()
 {
 
 	//Let's run this code only if GAMELIFT is enabled. Only with Server targets!
-#if WITH_GAMELIFT
+//#if WITH_GAMELIFT
 
 	//Getting the module first.
 	FGameLiftServerSDKModule* gameLiftSdkModule = &FModuleManager::LoadModuleChecked<FGameLiftServerSDKModule>(FName("GameLiftServerSDK"));
