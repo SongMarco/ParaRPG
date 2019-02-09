@@ -2,6 +2,7 @@
 #include "GameLiftLibrary.h"
 #include "Engine.h"
 #include "GameLiftServerSDK.h"
+#include "GameLiftClientSDK.h"
 
 
 
@@ -61,4 +62,16 @@ bool UGameLiftLibrary::InitGameLiftModule()
 
 
 	return true;
+}
+
+
+//FlexMAtch 매치메이커에 매치메이킹 요청을 보내는 함수
+
+void UGameLiftLibrary::RequestMatch()
+{
+
+	StartMatchmaking();
+
+
+
 }

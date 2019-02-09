@@ -17,5 +17,9 @@ class PRAGONRPG_API UGameLiftLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")	
 		static bool InitGameLiftModule();
+
+
+	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")
+		static void RequestMatch();
 	
 };
