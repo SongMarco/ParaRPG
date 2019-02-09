@@ -2,11 +2,11 @@
 #include "GameLiftLibrary.h"
 #include "Engine.h"
 #include "GameLiftServerSDK.h"
-#include "GameLiftClientSDK.h"
 
 
 
-bool UGameLiftLibrary::InitGameLiftModule()
+
+bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 {
 
 	//Let's run this code only if GAMELIFT is enabled. Only with Server targets!
@@ -47,8 +47,22 @@ bool UGameLiftLibrary::InitGameLiftModule()
 	//that are on the same instance must have unique ports, you may want to assign port values
 	//from a range, such as:
 	//const int32 port = FURL::UrlConfig.DefaultPort;
-	//params->port;
-	params->port = 7777;
+	params->port=serverPort;
+	//params->port = 7777;
+
+	//int32 gport = GEditor->GetEditorWorldContext().World()->URL.Port;
+	//params->port = gport;
+	////This game server tells GameLift that it listens on port 7777 for incoming player connections.
+	//FString Port = "7777";
+	//// Allow the command line to override the default port
+	//if (FParse::Value(FCommandLine::Get(), TEXT("Port="), Port) == false)
+	//{
+	//	Port = GConfig->GetStr(TEXT("URL"), TEXT("Port"), GEngineIni);
+	//}
+	
+	
+	
+
 
 	//Here, the game server tells GameLift what set of files to upload when the game session 
 	//ends. GameLift uploads everything specified here for the developers to fetch later.
@@ -70,8 +84,24 @@ bool UGameLiftLibrary::InitGameLiftModule()
 void UGameLiftLibrary::RequestMatch()
 {
 
-	StartMatchmaking();
+	////Getting the module first.
+	//FGameLiftClientSDKModule* gameLiftSdkModule = &FModuleManager::LoadModuleChecked<FGameLiftServerSDKModule>(FName("GameLiftClientSDK"));
+	//
+	//
+
+	//	Aws::GameLift::GameLiftClient::StartMatchmaking;
+
+}
+
+int32  UGameLiftLibrary::getServerPort(UObject * WorldContextObject)
+{
+
+	UWorld * World = GEngine->GetWorldFromContextObject(WorldContextObject);
 
 
-
+	if (World->IsServer())
+	{
+		return World->URL.Port;
+	}
+	return 0;
 }

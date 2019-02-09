@@ -15,11 +15,15 @@ class PRAGONRPG_API UGameLiftLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 
-	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")	
-		static bool InitGameLiftModule();
+		UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")
+		static bool InitGameLiftModule(int32 serverPort);
 
 
 	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")
 		static void RequestMatch();
 	
+
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Server Port", CompactNodeTitle = "GetServerPort", Keywords = "Server Port"), Category = Game)
+		static int32  getServerPort(UObject * WorldContextObject);
+
 };
