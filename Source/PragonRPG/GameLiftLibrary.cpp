@@ -6,6 +6,7 @@
 
 
 
+
 bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 {
 
@@ -89,10 +90,12 @@ void UGameLiftLibrary::RequestMatch()
 	//
 	//
 
-	//	Aws::GameLift::GameLiftClient::StartMatchmaking;
+    Aws::GameLift::GameLiftClient::StartMatchmaking;
 
 }
 
+
+//현재 서버의 포트를 반환하는 함수 : 플릿에게 전달하기 위해 사용됨
 int32  UGameLiftLibrary::getServerPort(UObject * WorldContextObject)
 {
 
