@@ -7,6 +7,8 @@
 #include "Engine.h"
 #include "EngineGlobals.h"
 #include "GameLiftServerSDK.h"
+
+
 #include "LiftGameMode.generated.h"
 
 /**
