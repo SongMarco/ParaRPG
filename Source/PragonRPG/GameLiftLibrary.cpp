@@ -90,7 +90,7 @@ void UGameLiftLibrary::RequestMatch()
 	//
 	//
 
-    Aws::GameLift::GameLiftClient::StartMatchmaking;
+    //Aws::GameLift::GameLiftClient::StartMatchmaking;
 
 }
 
