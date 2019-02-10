@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-GameLiftClientSDK-7346.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Ue4Source\UnrealEngine\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.obj"
+"D:\Ue4Project\ParaRPG\Plugins\GameLiftClientSDK_yeti\Intermediate\Build\Win64\UE4Editor\Development\GameLiftClientSDK\Module.GameLiftClientSDK.cpp.obj"
+"D:\Ue4Project\ParaRPG\Plugins\GameLiftClientSDK_yeti\Intermediate\Build\Win64\UE4Editor\Development\GameLiftClientSDK\GameLiftClientObject.cpp.obj"
+"D:\Ue4Project\ParaRPG\Plugins\GameLiftClientSDK_yeti\Intermediate\Build\Win64\UE4Editor\Development\GameLiftClientSDK\Module.GameLiftClientSDK.gen.cpp.obj"
+"C:\Ue4Source\UnrealEngine\Engine\Intermediate\Build\Win64\UE4Editor\Development\PCLaunch.rc.res"
+/OUT:"D:\Ue4Project\ParaRPG\Plugins\GameLiftClientSDK_yeti\Intermediate\Build\Win64\UE4Editor\Development\GameLiftClientSDK\UE4Editor-GameLiftClientSDK-7346.lib"

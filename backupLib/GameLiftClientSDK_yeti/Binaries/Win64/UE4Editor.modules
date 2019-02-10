@@ -1,0 +1,8 @@
+{
+	"BuildId": "879408d9-b2d9-4ef4-be26-ef884f7b1c19",
+	"Modules": 
+	{
+		"AWSCore": "UE4Editor-AWSCore.dll",
+		"GameLiftClientSDK": "UE4Editor-GameLiftClientSDK.dll"
+	}
+}
