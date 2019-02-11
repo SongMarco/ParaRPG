@@ -26,12 +26,11 @@
 			"Name": "Socketer",
 			"Enabled": true
 		},
-    {
-      "Name": "GameLiftServerSDK",
-      "Enabled": true
-    }
-
-		,{
+		{
+			"Name": "GameLiftServerSDK",
+			"Enabled": true
+		},
+		{
 			"Name": "GameLiftClientSDK",
 			"Enabled": false
 		}
