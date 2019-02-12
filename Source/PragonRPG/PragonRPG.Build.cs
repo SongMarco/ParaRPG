@@ -55,20 +55,12 @@ public class PragonRPG : ModuleRules
             Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
             */
 
-            ////라이브러리(x.lib) 패스 추가 - 헤더 파일 추가 확인할 것(아래 If~내용)
+            ////라이브러리(x.lib) 패스 추가 - 헤더 파일 추가 확인할 것(아래 If~내용)                     
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-core." + PlatformString + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift." + PlatformString + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-kinesis." + PlatformString + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-s3." +PlatformString+ ".lib"));
 
-            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift." + PlatformString + ".lib"));
-            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-core.lib");
-            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-gamelift.lib");
-            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-kinesis.lib");
-            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-s3.lib");
-
-
-            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-core" + ".lib"));
-            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift" + ".lib"));
-            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-kinesis" + ".lib"));
-            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-s3" + ".lib"));
-                 
         }
 
         if (isLibrarySupported)
