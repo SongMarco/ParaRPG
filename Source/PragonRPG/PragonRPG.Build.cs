@@ -22,7 +22,7 @@ public class PragonRPG : ModuleRules
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "JsonUtilities", "Http", "Json", "GameLiftServerSDK"/*, "GameLiftClientSDK"*/ });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
-                
+
         LoadYJMagicLib(Target);
         //PublicIncludePaths.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x86-windows/include");
         //PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x86-windows/bin/aws-cpp-sdk-gamelift.dll");
@@ -58,11 +58,16 @@ public class PragonRPG : ModuleRules
             ////라이브러리(x.lib) 패스 추가 - 헤더 파일 추가 확인할 것(아래 If~내용)
 
             //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift." + PlatformString + ".lib"));
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-core.lib");
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-gamelift.lib");
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-kinesis.lib");
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-s3.lib");
 
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-core" + ".lib"));
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift" + ".lib"));
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-kinesis" + ".lib"));
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-s3" + ".lib"));
+
+            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-core" + ".lib"));
+            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift" + ".lib"));
+            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-kinesis" + ".lib"));
+            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-s3" + ".lib"));
                  
         }
 

@@ -13,7 +13,6 @@
 
 
 
-
 bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 {
 
@@ -89,11 +88,9 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 
 //FlexMAtch 매치메이커에 매치메이킹 요청을 보내는 함수
 
-void UGameLiftLibrary::RequestMatch()
+void UGameLiftLibrary::RequestMatch(FString playerName)
 {
-	Aws::SDKOptions options;
 
-		Aws::InitAPI(options);
 	     //클라이언트 객체 생성
 	     Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
 	     
@@ -109,13 +106,27 @@ void UGameLiftLibrary::RequestMatch()
 	            
 	     //플레이어 객체 생성
 	     Aws::GameLift::Model::Player *player = new Aws::GameLift::Model::Player();
+
+		 //플레이어 벡터 생성(플레이어 목록, 근데 여긴 1명의 리퀘스트니까 크기는 1로 초기화)
+		 Aws::Vector<Aws::GameLift::Model::Player> vecPlayers(1);
+		 vecPlayers.push_back(*player);
+
+
+		 request->SetPlayers(vecPlayers);
 	     
+		 //Flexmatch 매치메이킹 설정 이름을 설정해줌
 	     request->SetConfigurationName("ParagonMatchMaker");
 	
-	     //request->SetPlayers(*player);
-	     //request->SetTicketId();
-	                      
-	     //client->StartMatchmaking(*request);
+	  
+		 //티켓 id값은 플레이어 id로 설정
+		 const char* tcharPlayerName = TCHAR_TO_ANSI(*playerName);
+		 request->SetTicketId(tcharPlayerName);
+		 
+		 //const Aws::Vector<Player>& value
+		 		 
+
+
+	     client->StartMatchmaking(*request);
 	
 	/*
 	
