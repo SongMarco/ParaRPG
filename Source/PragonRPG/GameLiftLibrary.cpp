@@ -91,25 +91,25 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 void UGameLiftLibrary::RequestMatch(FString playerName)
 {
 
-	//     //클라이언트 객체 생성
-	//     Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
-	//     
-	//
-	//     //Amazon.GameLift.Model.StartMatchmakingRequest req = new  Amazon.GameLift.Model.StartMatchmakingRequest();
-	//     //req.TicketId = matchmakingTicketID;
-	//     //req.Players = new List<A"mazon.GameLift.Model.Player>();
-	//                   
-	//     /**/
-	//
-	//     //리퀘스트 객체 생성
-	//     Aws::GameLift::Model::StartMatchmakingRequest *request = new  Aws::GameLift::Model::StartMatchmakingRequest();
-	//            
-	//     //플레이어 객체 생성
-	//     Aws::GameLift::Model::Player *player = new Aws::GameLift::Model::Player();
+	     //클라이언트 객체 생성
+	     Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
+	     
+	
+	     //Amazon.GameLift.Model.StartMatchmakingRequest req = new  Amazon.GameLift.Model.StartMatchmakingRequest();
+	     //req.TicketId = matchmakingTicketID;
+	     //req.Players = new List<A"mazon.GameLift.Model.Player>();
+	                   
+	     /**/
+	
+	     //리퀘스트 객체 생성
+	     Aws::GameLift::Model::StartMatchmakingRequest *request = new  Aws::GameLift::Model::StartMatchmakingRequest();
+	            
+	     //플레이어 객체 생성
+	     Aws::GameLift::Model::Player *player = new Aws::GameLift::Model::Player();
 
-	//	 //플레이어 벡터 생성(플레이어 목록, 근데 여긴 1명의 리퀘스트니까 크기는 1로 초기화)
-	//	 Aws::Vector<Aws::GameLift::Model::Player> vecPlayers(1);
-	//	 vecPlayers.push_back(*player);
+		 //플레이어 벡터 생성(플레이어 목록, 근데 여긴 1명의 리퀘스트니까 크기는 1로 초기화)
+		 Aws::Vector<Aws::GameLift::Model::Player> vecPlayers(1);
+		 vecPlayers.push_back(*player);
 
 
 	//	 request->SetPlayers(vecPlayers);
