@@ -2,8 +2,7 @@
 #include "GameLiftLibrary.h"
 #include "Engine.h"
 #include "GameLiftServerSDK.h"
-//#include <MyLiftPlugin.h>
-
+#include <aws/gamelift/GameLiftClient.h>
 
 
 
