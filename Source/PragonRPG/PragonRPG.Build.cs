@@ -45,6 +45,8 @@ public class PragonRPG : ModuleRules
             isLibrarySupported = true;
 
             string PlatformString = (Target.Platform == UnrealTargetPlatform.Win64) ? "x64" : "x86";
+
+            //D:\Ue4Project\ParaRPG\ThirdParty\GameLiftLib\lib
             string LibrariesPath = Path.Combine(ThirdPartyPath, "GameLiftLib", "lib");
 
             /*
@@ -53,13 +55,23 @@ public class PragonRPG : ModuleRules
             Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
             */
 
+            //라이브러리(x.lib) 패스 추가 - 헤더 파일 추가 확인할 것(아래 If~내용)
             PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift." + PlatformString + ".lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-core." + PlatformString + ".lib"));
+
         }
 
         if (isLibrarySupported)
         {
-            // Include path
+            //헤더파일 디렉토리 추가함
+
+            // Include path for gamelift
             PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "GameLiftLib", "Include"));
+
+            // Include path for aws core
+            PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "aws-cpp-sdk-core", "Include"));
+
+
         }
 
         PublicDefinitions.Add(string.Format("WITH_YJ_MAGIC_LIB_BINDING={0}", isLibrarySupported ? 1 : 0));
