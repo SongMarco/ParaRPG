@@ -5,9 +5,7 @@
 //
 #include <aws/core/Aws.h>
 #include <aws/core/utils/Outcome.h>
-
 #include <aws/gamelift/GameLiftClient.h>
-
 #include <aws/gamelift/model/StartMatchmakingRequest.h>
 #include <aws/gamelift/model/StartMatchmakingResult.h>
 #include <aws/gamelift/GameLiftErrors.h>
@@ -93,8 +91,9 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 
 void UGameLiftLibrary::RequestMatch()
 {
+	Aws::SDKOptions options;
 
-	
+		Aws::InitAPI(options);
 	     //클라이언트 객체 생성
 	     Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
 	     
@@ -116,7 +115,7 @@ void UGameLiftLibrary::RequestMatch()
 	     //request->SetPlayers(*player);
 	     //request->SetTicketId();
 	                      
-	     client->StartMatchmaking(*request);
+	     //client->StartMatchmaking(*request);
 	
 	/*
 	

@@ -55,11 +55,16 @@ public class PragonRPG : ModuleRules
             Console.WriteLine("... LibrariesPath -> " + LibrariesPath);
             */
 
-            //라이브러리(x.lib) 패스 추가 - 헤더 파일 추가 확인할 것(아래 If~내용)
-            PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift." + PlatformString + ".lib"));
+            ////라이브러리(x.lib) 패스 추가 - 헤더 파일 추가 확인할 것(아래 If~내용)
+            //PublicAdditionalLibraries.Add(Path.Combine(LibrariesPath, "aws-cpp-sdk-gamelift." + PlatformString + ".lib"));
 
-            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/ThirdParty/GameLiftLib/lib/aws-cpp-sdk-core.x64.lib");
+            //PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/ThirdParty/GameLiftLib/lib/aws-cpp-sdk-core.x64.lib");
 
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-core.lib");
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-gamelift.lib");
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-kinesis.lib");
+            PublicAdditionalLibraries.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/lib/aws-cpp-sdk-s3.lib");
+     
         }
 
         if (isLibrarySupported)
@@ -67,14 +72,16 @@ public class PragonRPG : ModuleRules
             //헤더파일 디렉토리 추가함
 
             // Include path for gamelift
-            PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "GameLiftLib", "Include"));
+            //PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "GameLiftLib", "Include"));
 
             //// Include path for aws core
             //PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "aws-cpp-sdk-core", "Include"));
 
             // Include path for aws core
-            PublicIncludePaths.Add("D:/Ue4Project/ParaRPG/ThirdParty/aws-cpp-sdk-core/include");
+            //PublicIncludePaths.Add("D:/Ue4Project/ParaRPG/ThirdParty/aws-cpp-sdk-core/include");
 
+            // Include path for aws core
+            PublicIncludePaths.Add("D:/Ue4Project/ParaRPG/packages/vcpkg/packages/aws-sdk-cpp_x64-windows/include");
         }
 
         PublicDefinitions.Add(string.Format("WITH_YJ_MAGIC_LIB_BINDING={0}", isLibrarySupported ? 1 : 0));
