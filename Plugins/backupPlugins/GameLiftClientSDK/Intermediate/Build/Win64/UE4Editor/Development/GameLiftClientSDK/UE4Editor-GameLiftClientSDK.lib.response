@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-GameLiftClientSDK.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Ue4Source\UnrealEngine\Engine\Intermediate\Build\Win64\UE4Editor\Development\Core\SharedPCH.Core.h.obj"
+"D:\Ue4Project\ParaRPG\Plugins\GameLiftClientSDK\Intermediate\Build\Win64\UE4Editor\Development\GameLiftClientSDK\GameLiftClientSDK.cpp.obj"
+"C:\Ue4Source\UnrealEngine\Engine\Intermediate\Build\Win64\UE4Editor\Development\PCLaunch.rc.res"
+/OUT:"D:\Ue4Project\ParaRPG\Plugins\GameLiftClientSDK\Intermediate\Build\Win64\UE4Editor\Development\GameLiftClientSDK\UE4Editor-GameLiftClientSDK.lib"
