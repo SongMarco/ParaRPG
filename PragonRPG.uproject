@@ -32,7 +32,7 @@
 		},
 		{
 			"Name": "GameLiftClientSDK",
-			"Enabled": false
+			"Enabled": true
 		},
 		{
 			"Name": "MyLiftPlugin",
