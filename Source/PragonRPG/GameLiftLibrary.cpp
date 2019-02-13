@@ -90,7 +90,13 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 
 void UGameLiftLibrary::RequestMatch(FString playerName)
 {
-//
+
+
+		//Aws SDK 초기화
+		Aws::SDKOptions options;
+		Aws::InitAPI(options);
+
+
 	     //클라이언트 객체 생성
 	     Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
 	     
@@ -118,13 +124,13 @@ void UGameLiftLibrary::RequestMatch(FString playerName)
 	     request->SetConfigurationName("ParagonMatchMaker");
 	
 	  //
-		 ////티켓 id값은 플레이어 id로 설정
-		 //const char* tcharPlayerNam_TO_ANSI(*playerName);
-		 //request->SetTicketId(tcharPlayerName);
-		 
-		 //const Aws::Vector<Player>& value
-		 		 
+		 //티켓 id값은 플레이어 id로 설정
 
+		 const char* tcharPlayerName = TCHAR_TO_ANSI(*playerName);
+
+		 request->SetTicketId(tcharPlayerName);
+		 
+		 //const Aws::Vector<Player>& value	 		 
 
 	     client->StartMatchmaking(*request);
 	
@@ -133,8 +139,6 @@ void UGameLiftLibrary::RequestMatch(FString playerName)
 	//Aws::GameLift::GameLiftClient
 	
 	
-	     //request->SetTicketId();
-	     //request->SetConfigurationName
 	
 	     //리퀘스트 요청을 Flexmatch에 전송e = TCHAR
 
