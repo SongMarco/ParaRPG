@@ -65,10 +65,7 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 	//if (FParse::Value(FCommandLine::Get(), TEXT("Port="), Port) == false)
 	//{
 	//	Port = GConfig->GetStr(TEXT("URL"), TEXT("Port"), GEngineIni);
-	//}
-	
-	
-	
+	//}	
 
 
 	//Here, the game server tells GameLift what set of files to upload when the game session 
@@ -90,57 +87,44 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 
 void UGameLiftLibrary::RequestMatch(FString playerName)
 {
-
-
 		//Aws SDK 초기화
 		Aws::SDKOptions options;
 		Aws::InitAPI(options);
 
 
-	     //클라이언트 객체 생성
-	     Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
-	     
-	
-	     //Amazon.GameLift.Model.StartMatchmakingRequest req = new  Amazon.GameLift.Model.StartMatchmakingRequest();
-	     //req.TicketId = matchmakingTicketID;
-	     //req.Players = new List<A"mazon.GameLift.Model.Player>();
-	                   
-	     /**/
-	
-	     //리퀘스트 객체 생성
-	     Aws::GameLift::Model::StartMatchmakingRequest *request = new  Aws::GameLift::Model::StartMatchmakingRequest();
-	            
-	     //플레이어 객체 생성
-	     Aws::GameLift::Model::Player *player = new Aws::GameLift::Model::Player();
-
-		 //플레이어 벡터 생성(플레이어 목록, 근데 여긴 1명의 리퀘스트니까 크기는 1로 초기화)
-		 Aws::Vector<Aws::GameLift::Model::Player> vecPlayers(1);
-		 vecPlayers.push_back(*player);
+	    //클라이언트 객체 생성
+	    Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
 
 
-		 request->SetPlayers(vecPlayers);
-	     
-		 //Flexmatch 매치메이킹 설정 이름을 설정해줌
-	     request->SetConfigurationName("ParagonMatchMaker");
-	
-	  //
-		 //티켓 id값은 플레이어 id로 설정
+	  //   아래는 주석 처리한 FlexMAtch 관련 모듈이다. 필요시 삭제하거나 업데이트할 것
+	  //리퀘스트 객체 생성
+	  //   Aws::GameLift::Model::StartMatchmakingRequest *request = new  Aws::GameLift::Model::StartMatchmakingRequest();
+	  //          
+	  //   //플레이어 객체 생성
+	  //   Aws::GameLift::Model::Player *player = new Aws::GameLift::Model::Player();
 
-		 const char* tcharPlayerName = TCHAR_TO_ANSI(*playerName);
+		 ////플레이어 벡터 생성(플레이어 목록, 근데 여긴 1명의 리퀘스트니까 크기는 1로 초기화)
+		 //Aws::Vector<Aws::GameLift::Model::Player> vecPlayers(1);
+		 //vecPlayers.push_back(*player);
 
-		 request->SetTicketId(tcharPlayerName);
-		 
-		 //const Aws::Vector<Player>& value	 		 
 
-	     client->StartMatchmaking(*request);
+		 //request->SetPlayers(vecPlayers);
+	  //   
+		 ////Flexmatch 매치메이킹 설정 이름을 설정해줌
+	  //   request->SetConfigurationName("ParagonMatchMaker");
 	
+	  ////
+		 ////티켓 id값은 플레이어 id로 설정
+
+		 //const char* tcharPlayerName = TCHAR_TO_ANSI(*playerName);
+
+		 //request->SetTicketId(tcharPlayerName);
+		 //
+		 ////const Aws::Vector<Player>& value	 	
+		 //		 
+	  //   client->StartMatchmaking(*request);
+		 //Flex모듈 끝
 	
-	
-	//Aws::GameLift::GameLiftClient
-	
-	
-	
-	     //리퀘스트 요청을 Flexmatch에 전송e = TCHAR
 
 }
 
