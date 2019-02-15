@@ -2,7 +2,10 @@
 
 #include "GameLiftClientApi.h"
 #include "GameLiftClientGlobals.h"
-
+//#include "windows.h"
+//#include "engine/EngineTypes.h"
+//#include "engine/Engine.h"
+#include <thread>
 #if WITH_GAMELIFTCLIENTSDK
 #include "aws/gamelift/model/DescribeGameSessionDetailsRequest.h"
 #include "aws/gamelift/GameLiftClient.h"
@@ -13,9 +16,12 @@
 #include "aws/gamelift/model/CreatePlayerSessionRequest.h"
 #include "aws/gamelift/model/CreateGameSessionRequest.h"
 #include"aws/gamelift/model/StartGameSessionPlacementRequest.h"
+#include "aws/gamelift/model/DescribeGameSessionPlacementRequest.h"
 
 #include"aws/gamelift/model/startGameSessionPlacementResult.h"
 #include <aws/core/http/HttpRequest.h>
+
+
 #endif
 
 UGameLiftCreateGameSession* UGameLiftCreateGameSession::CreateGameSession(FGameLiftGameSessionConfig GameSessionProperties, bool bIsGameLiftLocal)
@@ -327,52 +333,65 @@ void UGameLiftStartGameSessionPlacement::OnStartGameSessionPlacement(const Aws::
 	{
 		LOG_NORMAL("Received OnStartGameSessionPlacement with Success outcome.");
 
-		auto gs = Outcome.GetResult().GetGameSessionPlacement();
+		auto gameSessionPlacement = Outcome.GetResult().GetGameSessionPlacement();
 	
-		auto status = gs.GetStatus();
-		
+		auto status = gameSessionPlacement.GetStatus();
+					
+		Aws::String mPlacementId;
+
+		mPlacementId = gameSessionPlacement.GetPlacementId();
+
 		int32 statusnum = (int32)status;
-	
+			
+
+
+				
+
 		LOG_NORMAL("status is ===="+FString::FromInt(statusnum));
 		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
-		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
-		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
-		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
 	
 
-		//게임 세션이 아직 생성중
+
+
+		//게임 세션이 아직 생성중이므로,
 		if (status == Aws::GameLift::Model::GameSessionPlacementState::PENDING)
-		{
-			LOG_NORMAL("it's pending!!!");
+		{			
+		//세션 배치 확인 요청 성공	//세션 배치 확인 요청 성공
+			//반복해서 게임세션 배치 확인 요청을 보냄
+			for(i=0;i<10;i++)
+			{
+				LOG_NORMAL("it's pending!!!");
+				Aws::GameLift::Model::DescribeGameSessionPlacementRequest req;
+				req.SetPlacementId(mPlacementId);
+				auto outcome = Client->DescribeGameSessionPlacement(req);
+				//배치 확인 요청이 성공할 경우
+				if (outcome.IsSuccess())
+				{
+					auto gs = outcome.GetResult().GetGameSessionPlacement();
+
+					//배치 확인했는데 방에 들어갈 수 있는 경우
+					if (gs.GetStatus() == Aws::GameLift::Model::GameSessionPlacementState::FULFILLED)
+					{
+						LOG_NORMAL("god we did it!!!");
+
+						const FString ServerIpAddress = FString(gameSessionPlacement.GetIpAddress().c_str());
+						const FString ServerPort = FString::FromInt(gameSessionPlacement.GetPort());
+						const FString GameSessionId = FString(gameSessionPlacement.GetGameSessionId().c_str());
+
+						OnStartGameSessionPlacementSuccess.Broadcast(ServerIpAddress, ServerPort, GameSessionId);
+
+						break;
+					}
+				}
 			
-		}
-		
-		if(status == Aws::GameLift::Model::GameSessionPlacementState::FULFILLED)
-		{
+				//0.5초의 루프 지연 시간 후 반복
+				std::this_thread::sleep_for(std::chrono::milliseconds(500)); //c++11
 
-			LOG_NORMAL("fulfilled");
-		}
+			}
+					   
+		}		
 
-		
-		const FString ServerIpAddress = FString( gs.GetIpAddress().c_str() );
-		const FString ServerPort = FString::FromInt( gs.GetPort() );
-		const FString GameSessionId = FString( gs.GetGameSessionId().c_str() );
-		
-		
-		/*const char* iphere = Outcome.GetResult().GetGameSessionPlacement().GetIpAddress().c_str();
-		FString FipHere(iphere);
 
-		LOG_NORMAL(iphere);
-
-		LOG_NORMAL();
-*/
-/*
-		const FString ServerIpAddress = FString(Outcome.GetResult().GetGameSessionPlacement().GetIpAddress().c_str());
-		const FString ServerPort = FString::FromInt(Outcome.GetResult().GetGameSessionPlacement().GetPort());
-		const FString GameSessionId = FString(Outcome.GetResult().GetGameSessionPlacement().GetGameSessionId().c_str());*/
-		
-
-		OnStartGameSessionPlacementSuccess.Broadcast(ServerIpAddress, ServerPort, GameSessionId);
 	}
 	else
 	{
@@ -382,3 +401,40 @@ void UGameLiftStartGameSessionPlacement::OnStartGameSessionPlacement(const Aws::
 	}
 #endif
 }
+//
+//
+//bool UGameLiftStartGameSessionPlacement::CheckGameSessionPlacement()
+//{
+//	while (true)
+//	{
+//		Aws::GameLift::Model::DescribeGameSessionPlacementRequest req;
+//		req.SetPlacementId(mPlacementId);
+//		auto outcome = GGameLiftManager->GetAwsClient()->DescribeGameSessionPlacement(req);
+//	
+//		if (outcome.IsSuccess())
+//		{
+//			auto gs = outcome.GetResult().GetGameSessionPlacement();
+//
+//			if (gs.GetStatus() == Aws::GameLift::Model::GameSessionPlacementState::FULFILLED)
+//			{
+//				mGameSessionId = gs.GetGameSessionArn();
+//				mIpAddress = gs.GetIpAddress();
+//				mPort = gs.GetPort();
+//
+//				/// change region...
+//				GGameLiftManager->SetUpAwsClient(gs.GetGameSessionRegion());
+//
+//				return true;
+//			}
+//		}
+//		else
+//		{
+//			break;
+//		}
+//
+//		Sleep(500);
+//	}
+//
+//	return false;
+//
+//}
