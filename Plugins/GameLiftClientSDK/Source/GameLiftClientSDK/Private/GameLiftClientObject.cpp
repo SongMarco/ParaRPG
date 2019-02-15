@@ -2,6 +2,7 @@
 
 #include "GameLiftClientObject.h"
 #include "aws/core/client/ClientConfiguration.h"
+#include "aws/core/auth/AWSCredentialsProvider.h"
 
 
 
@@ -23,7 +24,7 @@ void UGameLiftClientObject::Internal_InitGameLiftClientSDK(const FString& Access
 		ClientConfig.scheme = Aws::Http::Scheme::HTTP;
 		const FString HostAddress = FString::Printf(TEXT("localhost:%i"), LocalPort);
 		ClientConfig.endpointOverride = TCHAR_TO_UTF8(*HostAddress);
-		LOG_WARNING("GameLift is currently configured to use GameLift Local.");
+		//LOG_WARNING("GameLift is currently configured to use GameLift Local.");
 	}
 
 	Credentials = Aws::Auth::AWSCredentials(TCHAR_TO_UTF8(*AccessKey), TCHAR_TO_UTF8(*Secret));
@@ -44,7 +45,8 @@ UGameLiftClientObject* UGameLiftClientObject::CreateGameLiftObject(const FString
 UGameLiftCreateGameSession* UGameLiftClientObject::CreateGameSession(FGameLiftGameSessionConfig GameSessionProperties)
 {
 #if WITH_GAMELIFTCLIENTSDK
-	UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties, bIsUsingGameLiftLocal);
+	//UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties, bIsUsingGameLiftLocal);
+	UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties);
 	Proxy->GameLiftClient = GameLiftClient;
 	return Proxy;
 #endif

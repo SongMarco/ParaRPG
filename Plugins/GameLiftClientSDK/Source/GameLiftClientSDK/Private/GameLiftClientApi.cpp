@@ -12,6 +12,7 @@
 #include "aws/gamelift/model/SearchGameSessionsRequest.h"
 #include "aws/gamelift/model/CreatePlayerSessionRequest.h"
 #include "aws/gamelift/model/CreateGameSessionRequest.h"
+#include"aws/gamelift/model/StartGameSessionPlacementRequest.h"
 #include <aws/core/http/HttpRequest.h>
 #endif
 
@@ -275,11 +276,11 @@ EActivateStatus UGameLiftStartGameSessionPlacement::Activate()
 		//placement id를 플레이어 id로 설정(1 플레이어는 1 플레이만 가능하니까 사용가능)
 		Request.SetPlacementId(TCHAR_TO_UTF8(*PlayerID));
 
-		Aws::GameLift::StartPlayerSessionResponseReceivedHandler Handler;
-		Handler = std::bind(&UGameLiftCreatePlayerSession::OnCreatePlayerSession, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
+		Aws::GameLift::StartGameSessionPlacementResponseReceivedHandler Handler;
+		Handler = std::bind(&UGameLiftStartGameSessionPlacement::OnStartGameSessionPlacement, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 
 		LOG_NORMAL("Creating new player session...");
-		GameLiftClient->CreatePlayerSessionAsync(Request, Handler);
+		GameLiftClient->StartGameSessionPlacementAsync(Request, Handler);
 		return EActivateStatus::ACTIVATE_Success;
 	}
 	LOG_ERROR("GameLiftClient is null. Did you call CreateGameLiftObject first?");
