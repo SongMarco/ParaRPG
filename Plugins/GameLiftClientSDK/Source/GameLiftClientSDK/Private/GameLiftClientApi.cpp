@@ -13,6 +13,8 @@
 #include "aws/gamelift/model/CreatePlayerSessionRequest.h"
 #include "aws/gamelift/model/CreateGameSessionRequest.h"
 #include"aws/gamelift/model/StartGameSessionPlacementRequest.h"
+
+#include"aws/gamelift/model/startGameSessionPlacementResult.h"
 #include <aws/core/http/HttpRequest.h>
 #endif
 
@@ -275,11 +277,15 @@ EActivateStatus UGameLiftStartGameSessionPlacement::Activate()
 
 		//placement id를 플레이어 id로 설정(1 플레이어는 1 플레이만 가능하니까 사용가능)
 		Request.SetPlacementId(TCHAR_TO_UTF8(*PlayerID));
+		Request.SetGameSessionQueueName("ParagonQueue");
+		Request.SetMaximumPlayerSessionCount(2);
 
 		Aws::GameLift::StartGameSessionPlacementResponseReceivedHandler Handler;
 		Handler = std::bind(&UGameLiftStartGameSessionPlacement::OnStartGameSessionPlacement, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
 
 		LOG_NORMAL("Creating new player session...");
+
+		//여기서@@@ 세션을 찾는 리퀘스트가 시작된다~~~~~
 		GameLiftClient->StartGameSessionPlacementAsync(Request, Handler);
 		return EActivateStatus::ACTIVATE_Success;
 	}
@@ -295,9 +301,11 @@ void UGameLiftCreatePlayerSession::OnCreatePlayerSession(const Aws::GameLift::Ga
 	if (Outcome.IsSuccess())
 	{
 		LOG_NORMAL("Received OnCreatePlayerSession with Success outcome.");
+
 		const FString ServerIpAddress = FString(Outcome.GetResult().GetPlayerSession().GetIpAddress().c_str());
 		const FString ServerPort = FString::FromInt(Outcome.GetResult().GetPlayerSession().GetPort());
 		const FString MyPlayerSessionID = FString(Outcome.GetResult().GetPlayerSession().GetPlayerSessionId().c_str());
+
 		OnCreatePlayerSessionSuccess.Broadcast(ServerIpAddress, ServerPort, MyPlayerSessionID);
 	}
 	else
@@ -318,9 +326,52 @@ void UGameLiftStartGameSessionPlacement::OnStartGameSessionPlacement(const Aws::
 	if (Outcome.IsSuccess())
 	{
 		LOG_NORMAL("Received OnStartGameSessionPlacement with Success outcome.");
+
+		auto gs = Outcome.GetResult().GetGameSessionPlacement();
+	
+		auto status = gs.GetStatus();
+		
+		int32 statusnum = (int32)status;
+	
+		LOG_NORMAL("status is ===="+FString::FromInt(statusnum));
+		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
+		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
+		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
+		LOG_NORMAL("status is ====" + FString::FromInt(statusnum));
+	
+
+		//게임 세션이 아직 생성중
+		if (status == Aws::GameLift::Model::GameSessionPlacementState::PENDING)
+		{
+			LOG_NORMAL("it's pending!!!");
+			
+		}
+		
+		if(status == Aws::GameLift::Model::GameSessionPlacementState::FULFILLED)
+		{
+
+			LOG_NORMAL("fulfilled");
+		}
+
+		
+		const FString ServerIpAddress = FString( gs.GetIpAddress().c_str() );
+		const FString ServerPort = FString::FromInt( gs.GetPort() );
+		const FString GameSessionId = FString( gs.GetGameSessionId().c_str() );
+		
+		
+		/*const char* iphere = Outcome.GetResult().GetGameSessionPlacement().GetIpAddress().c_str();
+		FString FipHere(iphere);
+
+		LOG_NORMAL(iphere);
+
+		LOG_NORMAL();
+*/
+/*
 		const FString ServerIpAddress = FString(Outcome.GetResult().GetGameSessionPlacement().GetIpAddress().c_str());
 		const FString ServerPort = FString::FromInt(Outcome.GetResult().GetGameSessionPlacement().GetPort());
-		const FString GameSessionId = FString(Outcome.GetResult().GetGameSessionPlacement().GetGameSessionId().c_str());
+		const FString GameSessionId = FString(Outcome.GetResult().GetGameSessionPlacement().GetGameSessionId().c_str());*/
+		
+
 		OnStartGameSessionPlacementSuccess.Broadcast(ServerIpAddress, ServerPort, GameSessionId);
 	}
 	else
