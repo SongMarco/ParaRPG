@@ -1,6 +1,7 @@
 // Created by YetiTech Studios.
 
 #include "GameLiftClientObject.h"
+#include "GameLiftClientApi.h"
 #include "aws/core/client/ClientConfiguration.h"
 #include "aws/core/auth/AWSCredentialsProvider.h"
 
@@ -45,8 +46,8 @@ UGameLiftClientObject* UGameLiftClientObject::CreateGameLiftObject(const FString
 UGameLiftCreateGameSession* UGameLiftClientObject::CreateGameSession(FGameLiftGameSessionConfig GameSessionProperties)
 {
 #if WITH_GAMELIFTCLIENTSDK
-	//UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties, bIsUsingGameLiftLocal);
-	UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties);
+	UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties, bIsUsingGameLiftLocal);
+	//UGameLiftCreateGameSession* Proxy = UGameLiftCreateGameSession::CreateGameSession(GameSessionProperties);
 	Proxy->GameLiftClient = GameLiftClient;
 	return Proxy;
 #endif
