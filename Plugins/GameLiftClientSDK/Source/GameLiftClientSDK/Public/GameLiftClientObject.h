@@ -73,4 +73,9 @@ public:
 	**/
 	UFUNCTION(BlueprintCallable, Category = "GameLift Client Object")	
 	UGameLiftCreatePlayerSession* CreatePlayerSession(FString GameSessionID, FString UniquePlayerID);
+
+	//게임 세션 배치용 커스텀 함수 생성
+	UFUNCTION(BlueprintCallable, Category = "GameLift Client Object")
+	UGameLiftStartGameSessionPlacement* StartGameSessionPlacement(FString UniquePlayerID);
+
 };

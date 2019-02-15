@@ -70,3 +70,13 @@ UGameLiftCreatePlayerSession* UGameLiftClientObject::CreatePlayerSession(FString
 #endif
 	return nullptr;
 }
+
+UGameLiftStartGameSessionPlacement * UGameLiftClientObject::StartGameSessionPlacement(FString UniquePlayerID)
+{
+#if WITH_GAMELIFTCLIENTSDK
+	UGameLiftStartGameSessionPlacement* Proxy = UGameLiftStartGameSessionPlacement::StartGameSessionPlacement(UniquePlayerID);
+	Proxy->GameLiftClient = GameLiftClient;
+	return Proxy;
+#endif
+	return nullptr;
+}
