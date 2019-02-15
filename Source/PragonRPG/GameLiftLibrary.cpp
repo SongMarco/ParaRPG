@@ -6,14 +6,14 @@
 #include "aws/core/Aws.h"
 #include "aws/core/utils/Outcome.h"
 #include "aws/gamelift/gameliftclient.h"
-#include "aws/gamelift/model/StartMatchmakingRequest.h"
-#include "aws/gamelift/model/StartMatchmakingResult.h"
+#include "aws/gamelift/model/StartGameSessionPlacementRequest.h"
+
 #include "aws/gamelift/GameLiftErrors.h"
 
 
 
 
-bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
+bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 {
 
 	//Let's run this code only if GAMELIFT is enabled. Only with Server targets!
@@ -85,7 +85,7 @@ bool UGameLiftLibrary::InitGameLiftModule(int32 serverPort)
 
 //FlexMAtch 매치메이커에 매치메이킹 요청을 보내는 함수
 
-void UGameLiftLibrary::RequestMatch(FString playerName)
+void UGameLiftLibrary::LaunchGameSessionPlacement(FString playerName)
 {
 		//Aws SDK 초기화
 		Aws::SDKOptions options;
@@ -95,6 +95,20 @@ void UGameLiftLibrary::RequestMatch(FString playerName)
 	    //클라이언트 객체 생성
 	    Aws::GameLift::GameLiftClient *client = new Aws::GameLift::GameLiftClient;
 
+
+
+
+		//세션 생성 리퀘스트 생성
+		Aws::GameLift::Model::StartGameSessionPlacementRequest req = Aws::GameLift::Model::StartGameSessionPlacementRequest();
+		req.SetGameSessionQueueName("ParagonQueue");
+		req.SetMaximumPlayerSessionCount(2);
+
+		const char* tcharPlayerName = TCHAR_TO_ANSI(*playerName);
+
+		req.SetPlacementId(tcharPlayerName);
+		
+		//리퀘스트를 이용해 StartGameSessionPlacement 시작
+		client->StartGameSessionPlacement(req);
 
 	  //   아래는 주석 처리한 FlexMAtch 관련 모듈이다. 필요시 삭제하거나 업데이트할 것
 	  //리퀘스트 객체 생성
@@ -128,6 +142,22 @@ void UGameLiftLibrary::RequestMatch(FString playerName)
 
 }
 
+
+
+//게임 세션 placement Id를 생성하는 함수
+void GameSession::GeneratePlacementId()
+{
+	UUID uuid;
+	UuidCreate(&uuid);
+
+	unsigned char* str = nullptr;
+	UuidToStringA(&uuid, &str);
+
+	mPlacementId.clear();
+	mPlacementId = std::string((char*)str);
+
+	RpcStringFreeA(&str);
+}
 
 //현재 서버의 포트를 반환하는 함수 : 플릿에게 전달하기 위해 사용됨
 int32  UGameLiftLibrary::getServerPort(UObject * WorldContextObject)
