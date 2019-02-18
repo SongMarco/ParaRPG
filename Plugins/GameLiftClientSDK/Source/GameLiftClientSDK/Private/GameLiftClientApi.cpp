@@ -358,7 +358,7 @@ void UGameLiftStartGameSessionPlacement::OnStartGameSessionPlacement(const Aws::
 		{			
 		//세션 배치 확인 요청 성공	//세션 배치 확인 요청 성공
 			//반복해서 게임세션 배치 확인 요청을 보냄
-			for(i=0;i<10;i++)
+			for(int i=0;i<10;i++)
 			{
 				LOG_NORMAL("it's pending!!!");
 				Aws::GameLift::Model::DescribeGameSessionPlacementRequest req;
