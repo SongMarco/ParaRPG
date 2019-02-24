@@ -12,7 +12,7 @@
 
 
 
-
+//게임 서버와 AWS SDK 모듈을 연동하기 위한 함수 코드
 bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 {
 
@@ -29,12 +29,16 @@ bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 	//to the game server along with a game session object containing game properties 
 	//and other settings. Once the game server is ready to receive player connections, 
 	//invoke GameLiftServerAPI.ActivateGameSession()
+
+	//게임 세션 활성화
 	auto onGameSession = [=](Aws::GameLift::Server::Model::GameSession gameSession)
 	{
 		gameLiftSdkModule->ActivateGameSession();
 	};
 
+	//프로세스에 사용할 파라미터 설정
 	FProcessParameters* params = new FProcessParameters();
+
 	params->OnStartGameSession.BindLambda(onGameSession);
 
 	//OnProcessTerminate callback. GameLift invokes this before shutting down the instance 
@@ -54,18 +58,11 @@ bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 	//that are on the same instance must have unique ports, you may want to assign port values
 	//from a range, such as:
 	//const int32 port = FURL::UrlConfig.DefaultPort;
+
+
+	//메소드 파라미터로 넣은 서버 포트값을 프로세스 파라미터로 설정함 -> 대시보드에서 서버 포트 확인 가능
 	params->port=serverPort;
 	//params->port = 7777;
-
-	//int32 gport = GEditor->GetEditorWorldContext().World()->URL.Port;
-	//params->port = gport;
-	////This game server tells GameLift that it listens on port 7777 for incoming player connections.
-	//FString Port = "7777";
-	//// Allow the command line to override the default port
-	//if (FParse::Value(FCommandLine::Get(), TEXT("Port="), Port) == false)
-	//{
-	//	Port = GConfig->GetStr(TEXT("URL"), TEXT("Port"), GEngineIni);
-	//}	
 
 
 	//Here, the game server tells GameLift what set of files to upload when the game session 
@@ -83,7 +80,7 @@ bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 }
 
 
-//FlexMAtch 매치메이커에 매치메이킹 요청을 보내는 함수
+//FlexMAtch 매치메이커에 매치메이킹 요청을 보내는 함수, 현재 사용 안함. 플러그인 통해서 사용
 
 void UGameLiftLibrary::LaunchGameSessionPlacement(FString playerName)
 {
@@ -143,10 +140,10 @@ void UGameLiftLibrary::LaunchGameSessionPlacement(FString playerName)
 }
 
 
-//현재 서버의 포트를 반환하는 함수 : 플릿에게 전달하기 위해 사용됨
+
+//현재 서버의 포트를 반환하는 함수 : 플릿에게 파라미터로 전달하기 위해 사용됨
 int32  UGameLiftLibrary::getServerPort(UObject * WorldContextObject)
 {
-
 	
 	UWorld * World = GEngine->GetWorldFromContextObject(WorldContextObject);
 
