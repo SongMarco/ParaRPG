@@ -79,21 +79,48 @@ bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 	return true;
 }
 
-void UGameLiftLibrary::ShutDown()
+//플레이어 참여
+bool UGameLiftLibrary::AcceptPlayer(FString playerSessionId)
+{
+	//Getting the module first.
+	FGameLiftServerSDKModule* gameLiftSdkModule = &FModuleManager::LoadModuleChecked<FGameLiftServerSDKModule>(FName("GameLiftServerSDK"));
+
+	
+	auto outcome = gameLiftSdkModule->AcceptPlayerSession(playerSessionId);
+
+	if (outcome.IsSuccess())
+	{
+		return true;
+	}
+
+	else {
+		return false;
+	}   
+}
+
+void UGameLiftLibrary::ShutDownServerProcess()
 {
 
-	GIsRequestingExit = true;
+	//Getting the module first.
+	FGameLiftServerSDKModule* gameLiftSdkModule = &FModuleManager::LoadModuleChecked<FGameLiftServerSDKModule>(FName("GameLiftServerSDK"));
+	
+	//게임 세션을 종료(확인됨)
+	if (gameLiftSdkModule->TerminateGameSession().IsSuccess()) {
+
+		UE_LOG(LogTemp, Log, TEXT("Server shutting down"));
+
+		//AWS SDK에게 프로세스 종료 여부를 전달
+		if (gameLiftSdkModule->ProcessEnding().IsSuccess()) {
+
+			//게임 서버 프로세스를 닫는다.
+			GIsRequestingExit = true;
+		}			
+			
+	}
+	
+	//
 	   
-	////Getting the module first.
-	//FGameLiftServerSDKModule* gameLiftSdkModule = &FModuleManager::LoadModuleChecked<FGameLiftServerSDKModule>(FName("GameLiftServerSDK"));
-
-	////if (gameLiftSdkModule->TerminateGameSession().IsSuccess) {
-
-
-	////	if(gameLift)
-
-	////}
-	////
+	
 	   
 }
 

@@ -17,8 +17,13 @@ class PRAGONRPG_API UGameLiftLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")
 		static bool InitGameLiftServerModule(int32 serverPort);
 
+
+	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary")
+		static bool AcceptPlayer(FString playerSessionId);
+
+
 	UFUNCTION(Blueprintcallable, Category = "GameLiftLibrary", meta = (HidePin = "WorldContextObject", DefaultTosSelf = "WorldContextObject", Keywords="Shut Down") )
-		static void ShutDown();
+		static void ShutDownServerProcess();
 	
 
 
