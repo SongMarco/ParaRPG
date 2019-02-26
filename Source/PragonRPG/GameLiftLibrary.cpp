@@ -79,6 +79,24 @@ bool UGameLiftLibrary::InitGameLiftServerModule(int32 serverPort)
 	return true;
 }
 
+void UGameLiftLibrary::ShutDown()
+{
+
+	GIsRequestingExit = true;
+	   
+	////Getting the module first.
+	//FGameLiftServerSDKModule* gameLiftSdkModule = &FModuleManager::LoadModuleChecked<FGameLiftServerSDKModule>(FName("GameLiftServerSDK"));
+
+	////if (gameLiftSdkModule->TerminateGameSession().IsSuccess) {
+
+
+	////	if(gameLift)
+
+	////}
+	////
+	   
+}
+
 
 //FlexMAtch 매치메이커에 매치메이킹 요청을 보내는 함수, 현재 사용 안함. 플러그인 통해서 사용
 
