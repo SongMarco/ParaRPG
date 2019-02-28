@@ -3,12 +3,12 @@
 #include "Engine.h"
 #include "GameLiftServerSDK.h"
 
-#include "aws/core/Aws.h"
-#include "aws/core/utils/Outcome.h"
-#include "aws/gamelift/gameliftclient.h"
-#include "aws/gamelift/model/StartGameSessionPlacementRequest.h"
-
-#include "aws/gamelift/GameLiftErrors.h"
+//#include "aws/core/Aws.h"
+//#include "aws/core/utils/Outcome.h"
+//#include "aws/gamelift/gameliftclient.h"
+//#include "aws/gamelift/model/StartGameSessionPlacementRequest.h"
+//
+//#include "aws/gamelift/GameLiftErrors.h"
 
 
 
