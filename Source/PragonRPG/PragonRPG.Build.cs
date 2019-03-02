@@ -20,7 +20,11 @@ public class PragonRPG : ModuleRules
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         bEnableExceptions = true;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "JsonUtilities", "Http", "Json", "GameLiftServerSDK", "GameLiftClientSDK", "AWSCore" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
+            "JsonUtilities", "Http",
+            "Json", "GameLiftServerSDK",
+          //  "GameLiftClientSDK", "AWSCore"
+        });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });
 
